@@ -15,6 +15,13 @@ class Polinomio {
         int grado();
         void mostrar();
         void listar();
+        void setC(int, int);
+        int getC(int);
+        Polinomio sumar(Polinomio);
+        Polinomio sumar(Polinomio, Polinomio);
+        Polinomio restar(Polinomio);
+        Polinomio restar(Polinomio, Polinomio);
+        Polinomio derivar();
     private:
         int *coeficientes;
         int g;

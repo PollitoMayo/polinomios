@@ -7,8 +7,9 @@
 using namespace std;
 
 int main() {
-    Polinomio P1("2#3#-7#2#2#8");
-    P1.mostrar();
+    //Polinomio P1("2#3#-7#2#2#8");
+    //P1.mostrar();
+
 
     return 0;
 }

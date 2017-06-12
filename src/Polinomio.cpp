@@ -13,6 +13,9 @@ Polinomio::Polinomio() {
 Polinomio::Polinomio(int gr) {
     g = gr;
     coeficientes = new int[g+1];
+    for(int i=0; i<g+1; i++) {
+        coeficientes[i] = 0;
+    }
 }
 
 Polinomio::Polinomio(string cadena) {
@@ -54,6 +57,61 @@ Polinomio::~Polinomio() {
 
 int Polinomio::grado() {
     return g;
+}
+
+void Polinomio::setC(int i, int c) {
+    coeficientes[i] = c;
+}
+
+int Polinomio::getC(int i) {
+    return coeficientes[i];
+}
+
+Polinomio Polinomio::sumar(Polinomio P) {
+    int mayor;
+    if(g >= P.grado()) {
+        mayor = g;
+    } else {
+        mayor = P.grado();
+    }
+    Polinomio R(mayor);
+    for(int i=0; i<mayor+1; i++) {
+        R.setC(i, R.getC(i) + P.getC(i) + coeficientes[i]);
+    }
+    return R;
+}
+
+Polinomio Polinomio::sumar(Polinomio P, Polinomio Q) {
+    Polinomio R = sumar(P);
+    return R.sumar(Q);
+}
+
+Polinomio Polinomio::restar(Polinomio P) {
+    int mayor;
+    if(g >= P.grado()) {
+        mayor = g;
+    } else {
+        mayor = P.grado();
+    }
+    Polinomio R(mayor);
+    for(int i=0; i<mayor; i++) {
+        R.setC(i, R.getC(i) - P.getC(i) + coeficientes[i]);
+    }
+    return R;
+}
+
+Polinomio Polinomio::restar(Polinomio P, Polinomio Q) {
+    Polinomio R = restar(P);
+    return R.restar(Q);
+}
+
+Polinomio Polinomio::derivar() {
+    Polinomio R(g-1);
+    for(int i=1; i<g+1; i++) {
+        R.setC(i-1, i*coeficientes[i]);
+    }
+    return R;
+
 }
 
 void Polinomio::listar() {

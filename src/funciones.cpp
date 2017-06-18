@@ -54,12 +54,22 @@ void leerArchivo(string nombre) {
         int c = 0;
         for(int i=0; i<linea.length(); i++) {
             if(linea[i] == '=') {
-                cout << linea;
+                cout << linea << endl;
                 c++;
             }
         }
     }
 
     archivo.close();
+}
+
+void remover(string &cadena, char caracter) {
+    string resultado = "";
+    for(int i=0; i<cadena.length(); i++) {
+        if(cadena[i] != caracter) {
+            resultado += cadena[i];
+        }
+    }
+    cadena = resultado;
 }
 

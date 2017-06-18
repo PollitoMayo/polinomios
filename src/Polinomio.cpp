@@ -31,22 +31,41 @@ void Polinomio::llenar(string cadena) {
     int almohadillas = 0;
     int coeficiente;
     int exponente;
-    string actual;
+    string actual = "";
+    bool esNombre = true;
     for(int i=0; i<cadena.length(); i++) {
-        if(cadena[i] == '#' || i == cadena.length()-1) {
-            almohadillas++;
-            if(i == cadena.length()-1 && cadena[i] != '#') {
+        if(cadena[i] != '=' && esNombre) {
+            actual += cadena[i];
+        } else if (cadena[i] == '=' && esNombre) {
+            remover(actual, ' ');
+            remover(actual, '-');
+            remover(actual, '+');
+            nombre = actual;
+            actual = "";
+            esNombre = false;
+            i++;
+        }
+        if(!esNombre) {
+            if(cadena[i] == '#' || i == cadena.length()-1) {
+                almohadillas++;
+                if(i == cadena.length()-1 && cadena[i] != '#') {
+                    actual += cadena[i];
+                }
+                if(almohadillas%2 == 0) {
+                    remover(actual, '-');
+                    istringstream(actual) >> exponente;
+                    coeficientes[exponente] += coeficiente;
+                } else if(almohadillas%2 != 0) {
+                    istringstream(actual) >> coeficiente;
+                }
+                actual = "";
+            } else {
                 actual += cadena[i];
             }
-            if(almohadillas%2 == 0) {
-                istringstream(actual) >> exponente;
-                coeficientes[exponente] += coeficiente;
-            } else if(almohadillas%2 != 0) {
-                istringstream(actual) >> coeficiente;
-            }
-            actual = "";
-        } else {
-            actual += cadena[i];
+        }
+        if(i+1 == cadena.length() && esNombre) {    // En caso de que el polinomio venga sin nombre
+            i = 0;
+            esNombre = false;
         }
     }
 }
@@ -105,6 +124,25 @@ Polinomio Polinomio::restar(Polinomio P, Polinomio Q) {
     return R.restar(Q);
 }
 
+Polinomio Polinomio::multiplicar(Polinomio P) {
+    Polinomio R(g + P.grado());
+    for(int i=0; i<g+1; i++) {
+        for(int j=0; j<P.grado()+1; j++) {
+            R.setC(i+j, R.getC(i+j) + coeficientes[i] * P.getC(j));
+        }
+    }
+    return R;
+}
+
+Polinomio Polinomio::multiplicar(Polinomio P, Polinomio Q) {
+    Polinomio R = multiplicar(P);
+    return R.multiplicar(Q);
+}
+
+Polinomio Polinomio::dividir(Polinomio P) {
+
+}
+
 Polinomio Polinomio::derivar() {
     Polinomio R(g-1);
     for(int i=1; i<g+1; i++) {
@@ -122,6 +160,7 @@ void Polinomio::listar() {
 
 void Polinomio::mostrar() {
     bool primero = true;
+    // cout << nombre << " = ";
     for(int i=0; i<g+1; i++) {
         if(coeficientes[i] != 0) {
             if(coeficientes[i] > 0 && !primero) {

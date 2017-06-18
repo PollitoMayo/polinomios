@@ -21,6 +21,9 @@ class Polinomio {
         Polinomio sumar(Polinomio, Polinomio);
         Polinomio restar(Polinomio);
         Polinomio restar(Polinomio, Polinomio);
+        Polinomio multiplicar(Polinomio);
+        Polinomio multiplicar(Polinomio, Polinomio);
+        Polinomio dividir(Polinomio);
         Polinomio derivar();
     private:
         int *coeficientes;

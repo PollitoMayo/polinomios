@@ -73,3 +73,33 @@ void remover(string &cadena, char caracter) {
     cadena = resultado;
 }
 
+void agregarPolinomio(Polinomio A, Lista &L){
+    Lista p, q;
+    p = L;
+
+    q = new(nodo);
+    q->info = A;
+    q->Link = NULL;
+
+    if (p == NULL){
+        L = q;
+    }
+    else{
+        while(p != NULL){
+            p = p->Link;
+        }
+        p->Link = q;
+    }
+}
+
+void verLista(Lista L){
+    Lista p;
+    p = L;
+    if(p != NULL){
+        while(p != NULL){
+            p->info.mostrar();
+            cout << endl;
+            p = p->Link;
+        }
+    }
+}

@@ -140,7 +140,27 @@ Polinomio Polinomio::multiplicar(Polinomio P, Polinomio Q) {
 }
 
 Polinomio Polinomio::dividir(Polinomio P) {
-
+    if(g < P.grado()) {
+        return NULL;
+    } else {
+        int gradoDividendo = g;
+        int gradoDivisor, gradoCociente, aux;
+        Polinomio R(g - P.grado());
+        while(gradoDividendo >= P.grado()){
+            gradoDivisor = P.grado();
+            gradoCociente = gradoDividendo - gradoDivisor;
+            aux = gradoDividendo;
+            R.setC(gradoCociente, getC(gradoDividendo)/P.getC(gradoDivisor));
+            while(gradoDivisor >= 0) {
+                setC(gradoDividendo, getC(gradoDividendo) - R.getC(gradoCociente)*P.getC(gradoDivisor));
+                gradoDividendo--;
+                gradoDivisor--;
+            }
+            gradoDividendo = aux;
+            gradoDividendo--;
+        }
+        return R;
+    }
 }
 
 Polinomio Polinomio::derivar() {

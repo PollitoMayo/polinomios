@@ -7,22 +7,50 @@
 using namespace std;
 
 int main() {
-    string a = "23 4";
-    Lista Polinomios;
-    /*string archivo;
-    cout << "Ingrese el nombre y/o ruta del archivo a abrir, con su sextension: ";
-    cin >> archivo;
-    leerArchivo(archivo);*/
+    int opcion;
+    string archivo;
+    Lista listaPolinomios;
+    listaPolinomios = NULL;
 
-    Polinomio P1("P1=5#3");
-    Polinomio P2("4#2#3#1#7#0");
-    //agregarPolinomio(P1, Polinomios);
-    //agregarPolinomio(P2, Polinomios);
-    //verLista(Polinomios);
-    P1.dividir(P2).mostrar();
-    //P1.multiplicar(P2).mostrar();
-    cout << endl;
-    P1.mostrar();
+    while(true) {
 
-    return 0;
+        menu(opcion);
+
+        switch(opcion){
+        case 1:
+            system("cls");
+            recibirPolinomio(listaPolinomios);
+            break;
+        case 2:
+            system("cls");
+            //Eliminar
+            break;
+        case 3:
+            system("cls");
+            //Operar
+            //Submenu
+            break;
+        case 4:
+            system("cls");
+            // leerExpresion
+            break;
+        case 5:
+            system("cls");
+            verPolinomios(listaPolinomios);
+            break;
+        case 6:
+            system("cls");
+            cout << "Ingrese el nombre y/o ruta del archivo a abrir, con su sextension: ";
+            cin >> archivo;
+            leerArchivo(archivo, listaPolinomios);
+            break;
+        default:
+            system("cls");
+            cout << "Terminando el programa..." << endl;
+            return 0;
+            break;
+        }
+    }
+
+
 }

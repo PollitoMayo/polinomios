@@ -71,7 +71,7 @@ void Polinomio::llenar(string cadena) {
 }
 
 Polinomio::~Polinomio() {
-    delete [] coeficientes;
+    //delete [] coeficientes;
 }
 
 int Polinomio::grado() {
@@ -86,6 +86,10 @@ int Polinomio::getC(int i) {
     return coeficientes[i];
 }
 
+string Polinomio::getN() {
+    return nombre;
+}
+
 Polinomio Polinomio::sumar(Polinomio P) {
     int mayor;
     if(g >= P.grado()) {
@@ -97,6 +101,8 @@ Polinomio Polinomio::sumar(Polinomio P) {
     for(int i=0; i<mayor+1; i++) {
         R.setC(i, R.getC(i) + P.getC(i) + coeficientes[i]);
     }
+    R.mostrar();
+    cout << endl;
     return R;
 }
 
@@ -180,8 +186,10 @@ void Polinomio::listar() {
 
 void Polinomio::mostrar() {
     bool primero = true;
-    // cout << nombre << " = ";
-    for(int i=0; i<g+1; i++) {
+    if(nombre != "") {
+        cout << nombre << " = ";
+    }
+    for(int i=g; i>=0; i--) {
         if(coeficientes[i] != 0) {
             if(coeficientes[i] > 0 && !primero) {
                 cout << "+";

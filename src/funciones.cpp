@@ -5,8 +5,48 @@
 
 using namespace std;
 
-void test() {
-    cout << "Prueba con exito" << endl;
+void menu(int &r) {
+    bool error = false;
+
+    do {
+        if (error) {
+            system("cls");
+            cout << "\n\n\tError, debe ingresar una opcion valida." << endl;
+        }
+
+        error = true;
+        cout << "\n\n\tMENU \n\n" << endl;
+        cout << "\t1. Agregar un polinomio" << endl;
+        cout << "\t2. Eliminar un polinomio" << endl;
+        cout << "\t3. Operar un polinomio" << endl;
+        cout << "\t4. Ejecutar una expresion" << endl;
+        cout << "\t5. Ver los polinomios registrados" << endl;
+        cout << "\t6. Leer polinomios y expresiones de un archivo" << endl << endl;
+        cout << "\t0. Salir\n" << endl;
+        cout << "\tIngrese el numero de la operacion a ejecutar: ";
+        cin >> r;
+    } while(r < 0 || r > 6);
+}
+
+void submenu(int &r) {
+    bool error = false;
+    system("cls");
+    do {
+        if (error) {
+            system("cls");
+            cout << "\n\n\tError, debe ingresar una opcion valida." << endl;
+        }
+        error = true;
+        cout << endl << endl << endl;
+        cout << "\t\t1. Sumar polinomios" << endl;
+        cout << "\t\t2. Restar polinomios" << endl;
+        cout << "\t\t3. Multiplicar polinomios" << endl;
+        cout << "\t\t4. Dividir polinomios" << endl;
+        cout << "\t\t5. Derivar polinomios" << endl << endl;
+        cout << "\t\t0. Salir" << endl;
+        cout << "\t\tIngrese el numero de la operacion a ejecutar: ";
+        cin >> r;
+    } while(r < 0 || r > 5);
 }
 
 int mayor(int a, int b) {
@@ -40,7 +80,9 @@ int obtenerGrado(string cadena) {
     return grado;
 }
 
-void leerArchivo(string nombre) {
+void leerArchivo(string nombre, Lista &L) {
+    bool esPolinomio = false;
+    bool esExpresion = false;
     ifstream archivo;
 
     archivo.open(nombre.c_str(), ios::in);
@@ -51,15 +93,21 @@ void leerArchivo(string nombre) {
     while(!archivo.eof()) {
         string linea;
         getline(archivo, linea);
-        int c = 0;
-        for(int i=0; i<linea.length(); i++) {
-            if(linea[i] == '=') {
-                cout << linea << endl;
-                c++;
+        if(linea == "Polinomios:") {
+            esPolinomio = true;
+            esExpresion = false;
+        } else if (linea == "Expresiones:") {
+            esExpresion = true;
+            esPolinomio = false;
+        } else if (linea != "") {
+            if(esPolinomio) {
+                Polinomio P(linea);
+                agregarPolinomio(P, L);
+            } else if (esExpresion) {
+                // leerExpresion
             }
         }
     }
-
     archivo.close();
 }
 
@@ -73,6 +121,14 @@ void remover(string &cadena, char caracter) {
     cadena = resultado;
 }
 
+void recibirPolinomio(Lista &L) {
+    string polinomio;
+    cout << "Ingrese un polinomio: ";
+    cin >> polinomio;
+    Polinomio P(polinomio);
+    agregarPolinomio(P, L);
+}
+
 void agregarPolinomio(Polinomio A, Lista &L){
     Lista p, q;
     p = L;
@@ -81,25 +137,49 @@ void agregarPolinomio(Polinomio A, Lista &L){
     q->info = A;
     q->Link = NULL;
 
-    if (p == NULL){
+    if (L == NULL){
         L = q;
     }
     else{
-        while(p != NULL){
+        while(p->Link != NULL){
             p = p->Link;
         }
         p->Link = q;
     }
 }
 
-void verLista(Lista L){
-    Lista p;
-    p = L;
-    if(p != NULL){
-        while(p != NULL){
-            p->info.mostrar();
+void verPolinomios(Lista L) {
+    if(L != NULL) {
+        while(L != NULL) {
+            L->info.mostrar();
             cout << endl;
-            p = p->Link;
+            L = L->Link;
+        }
+    } else {
+        cout << "No hay polinomios registrados" << endl;
+    }
+}
+
+Polinomio buscarPolinomio(Lista L, string nombre) {
+    if(L != NULL) {
+        while(L != NULL) {
+            if(L->info.getN() == nombre) {
+                return L->info;
+            }
+            L = L->Link;
         }
     }
+    return NULL;
+}
+
+void eliminarPolinomio(Lista &L, string nombre){
+    if(L != NULL) {
+        while(L != NULL) {
+            if(L->info.getN() == nombre) {
+                return L->info;
+            }
+            L = L->Link;
+        }
+    }
+    return NULL;
 }

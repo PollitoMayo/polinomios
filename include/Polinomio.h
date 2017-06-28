@@ -7,7 +7,6 @@ using namespace std;
 
 class Polinomio {
     public:
-        string nombre;
         Polinomio();
         Polinomio(int);
         Polinomio(string);
@@ -17,6 +16,8 @@ class Polinomio {
         void listar();
         void setC(int, int);
         int getC(int);
+        string getN();
+        int d(int);
         Polinomio sumar(Polinomio);
         Polinomio sumar(Polinomio, Polinomio);
         Polinomio restar(Polinomio);
@@ -26,6 +27,7 @@ class Polinomio {
         Polinomio dividir(Polinomio);
         Polinomio derivar();
     private:
+        string nombre;
         int *coeficientes;
         int g;
         void llenar(string);

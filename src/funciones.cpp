@@ -50,7 +50,7 @@ void submenu(int &r) {
     } while(r < 0 || r > 5);
 }
 
-int switchSubmenu(int opcion, Lista L, string nombreP1){
+/*int switchSubmenu(int opcion, Lista L, string nombreP1){
     string nombreP2;
     while(true){
         submenu(opcion);
@@ -90,7 +90,7 @@ int switchSubmenu(int opcion, Lista L, string nombreP1){
             return 0;
         }
     }
-}
+}*/
 
 int mayor(int a, int b) {
     if(a > b || a == b) {
@@ -223,8 +223,7 @@ void agregarPolinomio(Polinomio A, Lista &L){
 void verPolinomios(Lista L) {
     if(L != NULL) {
         while(L != NULL) {
-            L->info.mostrar();
-            cout << endl;
+            cout << L->info << endl;
             L = L->Link;
         }
     } else {
@@ -274,4 +273,17 @@ void eliminarPolinomio(Lista &L, string nombre){
     else{
         cout << "No hay polinomios registrados" << endl;
     }
+}
+
+Polinomio leerExpresion(string c) {
+    int parentesisA = c.find("(");
+    int parentesisC = c.find_last_of(")");
+    string expresion = c.substr(parentesisA+1, parentesisC-parentesisA-1);
+    if(parentesisA != c.npos) {
+        cout << expresion << endl;
+        leerExpresion(expresion);
+    } else {
+
+    }
+
 }

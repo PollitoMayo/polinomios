@@ -11,26 +11,24 @@ class Polinomio {
         Polinomio(int);
         Polinomio(string);
         virtual ~Polinomio();
-        int grado();
-        void mostrar();
         void listar();
         void setC(int, int);
         void setN(string);
+        int getG();
         int getC(int);
         string getN();
-        int d(int);
-        Polinomio sumar(Polinomio);
-        Polinomio sumar(Polinomio, Polinomio);
-        Polinomio restar(Polinomio);
-        Polinomio restar(Polinomio, Polinomio);
-        Polinomio multiplicar(Polinomio);
-        Polinomio multiplicar(Polinomio, Polinomio);
-        Polinomio dividir(Polinomio);
+        bool operator == (const Polinomio&) const;
+        Polinomio operator + (const Polinomio);
+        Polinomio operator - (const Polinomio);
+        Polinomio operator * (const Polinomio);
+        Polinomio operator / (const Polinomio);
+        Polinomio operator % (const Polinomio);
+        friend ostream &operator << (ostream &, const Polinomio &);
         Polinomio derivar();
     private:
         string nombre;
         int *coeficientes;
-        int g;
+        int grado;
         void llenar(string);
 };
 

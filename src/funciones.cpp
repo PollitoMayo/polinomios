@@ -50,8 +50,10 @@ void submenu(int &r) {
     } while(r < 0 || r > 5);
 }
 
-/*int switchSubmenu(int opcion, Lista L, string nombreP1){
+int switchSubmenu(int opcion, Lista L, string nombreP1){
     string nombreP2;
+    Polinomio P1, P2, PolinomioResultado; //P1 es el Polinomio ingresado por parametro, P2 es el Polinomio elegido dentro del submenu.
+    P1 = buscarPolinomio(L, nombreP1);
     while(true){
         submenu(opcion);
         switch(opcion){
@@ -59,38 +61,53 @@ void submenu(int &r) {
             verPolinomios(L);
             cout << "\nIngrese el nombre del polinomio que desea sumar: ";
             cin >> nombreP2;
-            buscarPolinomio(L, nombreP1).sumar(buscarPolinomio(L, nombreP2)).mostrar();
+            P2 = buscarPolinomio(L, nombreP2);
+            PolinomioResultado = P1 + P2;
+            system("cls");
+            cout << PolinomioResultado << endl;
             break;
         case 2:
             verPolinomios(L);
             cout << "\nIngrese el nombre del polinomio que desea restar: ";
             cin >> nombreP2;
-            buscarPolinomio(L, nombreP1).restar(buscarPolinomio(L, nombreP2)).mostrar();
+            P2 = buscarPolinomio(L, nombreP2);
+            PolinomioResultado = P1 - P2;
+            system("cls");
+            cout << PolinomioResultado << endl;
             break;
         case 3:
             verPolinomios(L);
             cout << "\nIngrese el nombre del polinomio que desea multiplicar: ";
             cin >> nombreP2;
-            buscarPolinomio(L, nombreP1).multiplicar(buscarPolinomio(L, nombreP2)).mostrar();
+            P2 = buscarPolinomio(L, nombreP2);
+            PolinomioResultado = P1 * P2;
+            system("cls");
+            cout << PolinomioResultado << endl;
             break;
         case 4:
             verPolinomios(L);
             cout << "\nIngrese el nombre del polinomio que desea dividir: ";
             cin >> nombreP2;
-            buscarPolinomio(L, nombreP1).dividir(buscarPolinomio(L, nombreP2)).mostrar();
+            P2 = buscarPolinomio(L, nombreP2);
+            PolinomioResultado = P1 / P2;
+            system("cls");
+            cout << PolinomioResultado << endl;
             break;
         case 5:
             verPolinomios(L);
             cout << "\nLa derivada es: ";
-            buscarPolinomio(L, nombreP1).derivar().mostrar();
+            PolinomioResultado = P1.derivar();
+            system("cls");
+            cout << PolinomioResultado << endl;
             cout << endl << endl;
             break;
         default:
+            system("cls");
             cout << "Terminando con las operaciones..." << endl;
             return 0;
         }
     }
-}*/
+}
 
 int mayor(int a, int b) {
     if(a > b || a == b) {
@@ -247,31 +264,30 @@ void eliminarPolinomio(Lista &L, string nombre){
     Lista p, q;
     int contador = 0;
     p = L;
-    if(p != NULL){
-        if(p->info.getN() == nombre){
-            L = p->Link;
-            delete p;
-            contador++;
-            cout << "Polinomio eliminado" << endl;
-        }
-        else{
+    if(p->info.getN() == nombre){
+        L = p->Link;
+        delete p;
+        contador++;
+        cout << "Polinomio eliminado" << endl;
+    }
+    else{
+        if(p->Link != NULL){
+            q = p;
+            p = p->Link;
             while(p != NULL){
-                if(p->Link->info.getN() == nombre){
-                    q = p->Link;
-                    p->Link = q->Link;
-                    delete q;
+                if(p->info.getN() == nombre){
+                    q->Link = p->Link;
+                    delete p;
                     contador++;
                     cout << "Polinomio eliminado" << endl;
                 }
                 p = p->Link;
+                q = q->Link;
             }
         }
-        if(contador == 0){
-            cout << "No hay un polinomio registrado con ese nombre" << endl;
-        }
     }
-    else{
-        cout << "No hay polinomios registrados" << endl;
+    if(contador == 0){
+        cout << "No hay un polinomio registrado con ese nombre" << endl;
     }
 }
 

@@ -130,8 +130,28 @@ Polinomio Polinomio::operator + (const Polinomio P) {
         mayor = P.grado;
     }
     Polinomio R(mayor);
-    for(int i=0; i<mayor+1; i++) {
-        R.coeficientes[i] = R.coeficientes[i] + P.coeficientes[i] + coeficientes[i];
+    for(int i=0; i<=mayor; i++) {
+        if(grado > P.grado){
+            if(i > P.grado){
+                R.coeficientes[i] = R.coeficientes[i] + coeficientes[i];
+            }
+            else{
+                R.coeficientes[i] = R.coeficientes[i] + P.coeficientes[i] + coeficientes[i];
+            }
+        }
+        else{
+            if(P.grado > grado){
+                if(i > grado){
+                    R.coeficientes[i] = R.coeficientes[i] + P.coeficientes[i];
+                }
+                else{
+                    R.coeficientes[i] = R.coeficientes[i] + P.coeficientes[i] + coeficientes[i];
+                }
+            }
+            else{
+                R.coeficientes[i] = R.coeficientes[i] + P.coeficientes[i] + coeficientes[i];
+            }
+        }
     }
     Polinomio vacio;
     if(R == vacio) {
@@ -148,8 +168,29 @@ Polinomio Polinomio::operator - (const Polinomio P) {
         mayor = P.grado;
     }
     Polinomio R(mayor);
+    if(grado >= P.grado) {
+        for(int i=0; i<=grado; i++){
+            R.coeficientes[i] = coeficientes[i];
+        }
+    } else {
+        R = P;
+    }
     for(int i=0; i<mayor; i++) {
-        R.coeficientes[i] = R.coeficientes[i] - P.coeficientes[i] + coeficientes[i];
+        if(grado > P.grado){
+            if(i <= P.grado){
+                R.coeficientes[i] = R.coeficientes[i] - P.coeficientes[i];
+            }
+        }
+        else{
+            if(P.grado > grado){
+                if(i <= grado){
+                    R.coeficientes[i] = coeficientes[i] - R.coeficientes[i];
+                }
+            }
+            else{
+                R.coeficientes[i] = R.coeficientes[i] - P.coeficientes[i];
+            }
+        }
     }
     Polinomio vacio;
     if(R == vacio) {

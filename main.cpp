@@ -30,16 +30,21 @@ int main() {
             break;
         case 2:
             system("cls");
-            cout << "Ingrese el nombre del polinomio que desea eliminar: ";
-            cin >> nombre;
-            eliminarPolinomio(listaPolinomios, nombre);
+            if(listaPolinomios == NULL){
+                cout << "No hay polinomios registrados." << endl;
+            }
+            else{
+                cout << "Ingrese el nombre del polinomio que desea eliminar: ";
+                cin >> nombre;
+                eliminarPolinomio(listaPolinomios, nombre);
+            }
             break;
         case 3:
             system("cls");
             verPolinomios(listaPolinomios);
             cout << "Ingrese el nombre del polinomio que quiere operar: ";
             cin >> nombre;
-            //switchSubmenu(opcion2, listaPolinomios, nombre);
+            switchSubmenu(opcion2, listaPolinomios, nombre);
             break;
         case 4:
             system("cls");

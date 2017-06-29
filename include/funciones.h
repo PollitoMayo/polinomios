@@ -13,7 +13,8 @@ typedef struct nodo{
 typedef nodo *Lista;
 
 void menu(int &);
-void submenu(int &);
+void submenu(int &, Lista, string);
+int switchSubmenu(int, Lista, string);
 void verPolinomios(Lista);
 int mayor(int, int);
 int obtenerGrado(string);
@@ -21,6 +22,7 @@ void leerArchivo(string, Lista &);
 void remover(string &, char);
 void recibirPolinomio(Lista &);
 void agregarPolinomio(Polinomio, Lista &);
+void eliminarPolinomio(Lista &, string);
 Polinomio buscarPolinomio(Lista, string);
 
 #endif // FUNCIONES_H_INCLUDED

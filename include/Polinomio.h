@@ -15,6 +15,7 @@ class Polinomio {
         void mostrar();
         void listar();
         void setC(int, int);
+        void setN(string);
         int getC(int);
         string getN();
         int d(int);

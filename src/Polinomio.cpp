@@ -82,6 +82,10 @@ void Polinomio::setC(int i, int c) {
     coeficientes[i] = c;
 }
 
+void Polinomio::setN(string r){
+    nombre = r;
+}
+
 int Polinomio::getC(int i) {
     return coeficientes[i];
 }
@@ -101,8 +105,6 @@ Polinomio Polinomio::sumar(Polinomio P) {
     for(int i=0; i<mayor+1; i++) {
         R.setC(i, R.getC(i) + P.getC(i) + coeficientes[i]);
     }
-    R.mostrar();
-    cout << endl;
     return R;
 }
 
@@ -212,5 +214,3 @@ void Polinomio::mostrar() {
 
     }
 }
-
-

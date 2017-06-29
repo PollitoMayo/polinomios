@@ -21,6 +21,7 @@ class Polinomio {
         Polinomio operator + (const Polinomio);
         Polinomio operator - (const Polinomio);
         Polinomio operator * (const Polinomio);
+        Polinomio operator * (const int);
         Polinomio operator / (const Polinomio);
         Polinomio operator % (const Polinomio);
         friend ostream &operator << (ostream &, const Polinomio &);

@@ -165,6 +165,22 @@ Polinomio Polinomio::operator * (const Polinomio P) {
             R.coeficientes[i+j] += coeficientes[i] * P.coeficientes[j];
         }
     }
+    Polinomio vacio;
+    if(R == vacio) {
+        return vacio;
+    }
+    return R;
+}
+
+Polinomio Polinomio::operator * (const int a) {
+    Polinomio R(grado);
+    for(int i=0; i<grado+1; i++) {
+        R.coeficientes[i] += coeficientes[i] * a;
+    }
+    Polinomio vacio;
+    if(R == vacio) {
+        return vacio;
+    }
     return R;
 }
 
@@ -193,7 +209,7 @@ Polinomio Polinomio::operator / (const Polinomio P) {
 }
 
 Polinomio Polinomio::operator % (const Polinomio P) {
-    /*if(grado < P.grado) {
+    if(grado < P.grado) {
         return NULL;
     } else {
         int gradoDividendo = grado;
@@ -212,8 +228,8 @@ Polinomio Polinomio::operator % (const Polinomio P) {
             gradoDividendo = aux;
             gradoDividendo--;
         }
-        return R;
-    }*/
+        return *this;
+    }
 }
 
 Polinomio Polinomio::derivar() {
@@ -243,7 +259,7 @@ ostream &operator << (ostream &output, const Polinomio &P){
             }
             if(P.coeficientes[i] == -1) {
                 output << "-";
-            } else if (P.coeficientes[i] != 1) {
+            } else if (P.coeficientes[i] != 1 || (P.coeficientes[i] == 1 && i == 0)) {
                 output << P.coeficientes[i];
             }
             if(i != 0) {

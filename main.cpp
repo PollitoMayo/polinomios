@@ -8,15 +8,16 @@
 using namespace std;
 
 int main() {
-    Polinomio P("4#2");
-    Polinomio Q("-4#2");
-    Polinomio R = P+Q;
-    cout << R << endl;
+    /*Polinomio P("1#5#2#3#-1#1#-8#0");
+    Polinomio Q("1#2#-2#1#1#0");
+    Polinomio P1("2#2");
+    Polinomio P2("-2#2");
+    Polinomio R = P1+P;
+    cout << R << endl;*/
 
     int opcion1, opcion2;
     string archivo, nombre;
-    Lista listaPolinomios;
-    listaPolinomios = NULL;
+    Lista listaPolinomios = NULL;
 
     while(true) {
 

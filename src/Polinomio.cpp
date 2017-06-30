@@ -188,7 +188,14 @@ Polinomio Polinomio::operator - (const Polinomio P) {
                 }
             }
             else{
-                R.coeficientes[i] = R.coeficientes[i] - P.coeficientes[i];
+                if(R == P){
+                    for(int i=0;i<=R.grado;i++){
+                        R.coeficientes[i] = 0;
+                    }
+                }
+                else{
+                    R.coeficientes[i] = R.coeficientes[i] - P.coeficientes[i];
+                }
             }
         }
     }
@@ -226,19 +233,23 @@ Polinomio Polinomio::operator * (const int a) {
 }
 
 Polinomio Polinomio::operator / (const Polinomio P) {
+    Polinomio Paux(grado);
+    for(int i=0; i <= Paux.grado; i++){
+        Paux.coeficientes[i] = coeficientes[i];
+    }
     if(grado < P.grado) {
         return NULL;
     } else {
-        int gradoDividendo = grado;
+        int gradoDividendo = Paux.grado;
         int gradoDivisor, gradoCociente, aux;
-        Polinomio R(grado - P.grado);
+        Polinomio R(Paux.grado - P.grado);
         while(gradoDividendo >= P.grado){
             gradoDivisor = P.grado;
             gradoCociente = gradoDividendo - gradoDivisor;
             aux = gradoDividendo;
-            R.coeficientes[gradoCociente] = coeficientes[gradoDividendo]/P.coeficientes[gradoDivisor];
+            R.coeficientes[gradoCociente] = Paux.coeficientes[gradoDividendo]/P.coeficientes[gradoDivisor];
             while(gradoDivisor >= 0) {
-                coeficientes[gradoDividendo] -= R.coeficientes[gradoCociente] * P.coeficientes[gradoDivisor];
+                Paux.coeficientes[gradoDividendo] -= R.coeficientes[gradoCociente] * P.coeficientes[gradoDivisor];
                 gradoDividendo--;
                 gradoDivisor--;
             }

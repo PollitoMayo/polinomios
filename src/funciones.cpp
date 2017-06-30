@@ -94,12 +94,9 @@ int switchSubmenu(int opcion, Lista L, string nombreP1){
             cout << PolinomioResultado << endl;
             break;
         case 5:
-            verPolinomios(L);
-            cout << "\nLa derivada es: ";
-            PolinomioResultado = P1.derivar();
             system("cls");
-            cout << PolinomioResultado << endl;
-            cout << endl << endl;
+            PolinomioResultado = P1.derivar();
+            cout << "La derivada es: " << PolinomioResultado << endl;
             break;
         default:
             system("cls");
@@ -228,12 +225,14 @@ void agregarPolinomio(Polinomio A, Lista &L){
 
     if (L == NULL){
         L = q;
+        cout << "Polinomio agregado." << endl;
     }
     else{
         while(p->Link != NULL){
             p = p->Link;
         }
         p->Link = q;
+        cout << "Polinomio agregado." << endl;
     }
 }
 

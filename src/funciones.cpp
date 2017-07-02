@@ -144,24 +144,24 @@ void leerArchivo(string nombre, Lista &L) {
 
     archivo.open(nombre.c_str(), ios::in);
     if(archivo.fail()) {
-        cout << "No se pudo abrir el archivo" << endl;
+        cout << "Error. No se pudo abrir el archivo." << endl << endl;
+        cout << "Ingrese el nombre y/o ruta del archivo a abrir, con su sextension: ";
+        cin >> nombre;
+        leerArchivo(nombre, L);
     }
 
     while(!archivo.eof()) {
         string linea;
         getline(archivo, linea);
         if(linea == "Polinomios:") {
-            cout << "Polinomios:" << endl;
             esPolinomio = true;
             esExpresion = false;
         } else if (linea == "Expresiones:") {
-            cout << endl << "Expresiones:" << endl;
             esExpresion = true;
             esPolinomio = false;
         } else if (linea != "") {
             if(esPolinomio) {
                 Polinomio P(linea);
-                cout << P << endl;
                 agregarPolinomio(P, L);
             } else if (esExpresion) {
                 cout << eval(linea, L) << endl;
@@ -283,8 +283,8 @@ void eliminarPolinomio(Lista &L, string nombre){
                     contador++;
                     cout << "Polinomio eliminado" << endl;
                 }
-                p = p->Link;
                 q = q->Link;
+                p = q->Link;
             }
         }
     }

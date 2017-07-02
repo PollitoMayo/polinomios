@@ -175,7 +175,7 @@ Polinomio Polinomio::operator - (const Polinomio P) {
     } else {
         R = P;
     }
-    for(int i=0; i<mayor; i++) {
+    for(int i=0; i<=mayor; i++) {
         if(grado > P.grado){
             if(i <= P.grado){
                 R.coeficientes[i] = R.coeficientes[i] - P.coeficientes[i];
@@ -185,6 +185,9 @@ Polinomio Polinomio::operator - (const Polinomio P) {
             if(P.grado > grado){
                 if(i <= grado){
                     R.coeficientes[i] = coeficientes[i] - R.coeficientes[i];
+                }
+                else{
+                    R.coeficientes[i] = -R.coeficientes[i];
                 }
             }
             else{

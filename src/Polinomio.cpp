@@ -188,14 +188,7 @@ Polinomio Polinomio::operator - (const Polinomio P) {
                 }
             }
             else{
-                if(R == P){
-                    for(int i=0;i<=R.grado;i++){
-                        R.coeficientes[i] = 0;
-                    }
-                }
-                else{
-                    R.coeficientes[i] = R.coeficientes[i] - P.coeficientes[i];
-                }
+                R.coeficientes[i] = R.coeficientes[i] - P.coeficientes[i];
             }
         }
     }

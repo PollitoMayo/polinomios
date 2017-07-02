@@ -24,5 +24,8 @@ void recibirPolinomio(Lista &);
 void agregarPolinomio(Polinomio, Lista &);
 void eliminarPolinomio(Lista &, string);
 Polinomio buscarPolinomio(Lista, string);
+Polinomio leerExpresion(string, Lista);
+Polinomio operarExpresion(string, Lista);
+Polinomio eval(string, Lista);
 
 #endif // FUNCIONES_H_INCLUDED

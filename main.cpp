@@ -8,12 +8,13 @@
 using namespace std;
 
 int main() {
-    /*Polinomio P("1#5#2#3#-1#1#-8#0");
-    Polinomio Q("1#2#-2#1#1#0");
-    Polinomio P1("2#2");
-    Polinomio P2("-2#2");
-    Polinomio R = P1+P;
-    cout << R << endl;*/
+    Polinomio P1("1#5#2#3#-1#1#-8#0");
+    Polinomio P2("3#5");
+    //Polinomio Q("1#2#-2#1#1#0");
+    //Polinomio P1("2#2");
+    //Polinomio P2("-2#2");
+    Polinomio R = P1-P2;
+    cout << R << endl;
 
     int opcion1, opcion2;
     string archivo, nombre;
@@ -22,6 +23,7 @@ int main() {
     while(true) {
 
         menu(opcion1);
+
 
         switch(opcion1){
         case 1:
@@ -48,7 +50,9 @@ int main() {
             break;
         case 4:
             system("cls");
-            // leerExpresion
+            cout << "Ingrese la expresion a ejecutar: ";
+            cin >> nombre;
+            cout << eval(nombre, listaPolinomios) << endl;
             break;
         case 5:
             system("cls");

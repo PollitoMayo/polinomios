@@ -151,17 +151,20 @@ void leerArchivo(string nombre, Lista &L) {
         string linea;
         getline(archivo, linea);
         if(linea == "Polinomios:") {
+            cout << "Polinomios:" << endl;
             esPolinomio = true;
             esExpresion = false;
         } else if (linea == "Expresiones:") {
+            cout << endl << "Expresiones:" << endl;
             esExpresion = true;
             esPolinomio = false;
         } else if (linea != "") {
             if(esPolinomio) {
                 Polinomio P(linea);
+                cout << P << endl;
                 agregarPolinomio(P, L);
             } else if (esExpresion) {
-                // leerExpresion
+                cout << eval(linea, L) << endl;
             }
         }
     }
@@ -290,15 +293,140 @@ void eliminarPolinomio(Lista &L, string nombre){
     }
 }
 
-Polinomio leerExpresion(string c) {
-    int parentesisA = c.find("(");
-    int parentesisC = c.find_last_of(")");
-    string expresion = c.substr(parentesisA+1, parentesisC-parentesisA-1);
-    if(parentesisA != c.npos) {
-        cout << expresion << endl;
-        leerExpresion(expresion);
-    } else {
+// EVAAAAAAAAAAAAAAAAAL
 
+Polinomio eval(string cadena, Lista P) {
+    class local {
+    public:
+        int pos = -1;
+        char ch;
+        string str;
+        Lista L;
+        Polinomio parsearTermino(string);
+        Polinomio parsearFactor(string);
+
+        local(string c, Lista A) {
+            str = c;
+            L = A;
+        }
+
+        void avanza() {
+            pos++;
+            if(pos < str.length()) {
+                ch = str[pos];
+            } else {
+                ch = NULL;
+                pos = -1;
+            }
+        }
+
+        bool esSiguiente(char c) {
+            while (ch == ' ') {
+                avanza();
+            }
+            if (ch == c) {
+                avanza();
+                return true;
+            }
+            return false;
+        }
+
+        Polinomio parsearVariable() {
+            /*if (esSiguiente('+')) {
+                return parsearVariable(); // unary plus
+            }
+            if (esSiguiente('-')) {
+                return -parsearVariable(); // unary minus
+            }*/
+
+            Polinomio R;
+            int posInicial = pos;
+            if (esSiguiente('(')) { // parentheses
+                R = parsearTermino();
+                esSiguiente(')');
+            } else if (ch != '/' && ch != '*' && ch != '+' && ch != '-' && ch != NULL) { // numbers
+                while (ch != '/' && ch != '*' && ch != '+' && ch != '-' && ch != NULL) {
+                    avanza();
+                }
+                R = buscarPolinomio(L, str.substr(posInicial, pos-posInicial));
+                cout << "Nombre: " << str.substr(posInicial, pos-posInicial) << endl;
+                cout << "Polinomio; " << R << endl;
+            /*} else if (ch >= 'a' && ch <= 'z') { // functions
+                while (ch >= 'a' && ch <= 'z') {
+                    avanzaChar();
+                }
+                string func = str.substr(startPos, this.pos);
+                x = parseFactor();
+                if (func == "sqrt") {
+                    x = sqrt(x);
+                } else if (func == "sin") {
+                    x = sin(x);
+                } else if (func == "cos") {
+                    x = cos(x);
+                } else if (func == "tan") {
+                    x = tan(x);
+                } else {
+                    cout << "Error, se encontró una función desconocida: " << func << "()" << endl;
+                }*/
+            } else {
+                cout << "Error, caracter inesperado: " << ch;
+            }
+            //if(eat('^')) x = Math.pow(x, parseFactor()); // exponentiation
+
+            return R;
+        }
+
+        Polinomio parsearFactor() {
+            Polinomio R = parsearVariable();
+            for (;;) {                  // for infinito
+                if (esSiguiente('*')) {
+                    R = R * parsearVariable(); // multiplicacion
+                } else if (esSiguiente('/')) {
+                    R = R / parsearVariable(); // division
+                } else {
+                    return R;
+                }
+            }
+        }
+
+        Polinomio parsearTermino() {
+            Polinomio R = parsearFactor();
+            for(;;) {                    // for infinito
+                if (esSiguiente('+')) {
+                    R = R + parsearFactor(); // addition
+                } else if (esSiguiente('-')) {
+                    R = R - parsearFactor(); // subtraction
+                } else {
+                    return R;
+                }
+            }
+        }
+    };
+
+    local E(cadena, P);
+    E.avanza();
+    Polinomio R = E.parsearTermino();
+    if (E.pos < cadena.length()) {
+        cout << "Error, caracter inesperado: " << E.ch;
     }
+    return R;
+}
 
+Polinomio leerExpresion(string c, Lista L) {
+    Polinomio R;
+    int abreP = c.find_last_of('(');
+    int parentesis = 0;
+    bool primero = true;
+    while(abreP != c.npos) {
+        int cierraP = c.find_first_of(')');
+        string expresion = c.substr(abreP+1, cierraP-abreP-1);
+        if(primero) {
+
+        }
+        cout << expresion << endl;
+        c.erase(abreP, cierraP-abreP+1);
+        abreP = c.find_last_of('(');
+    }
+    cout << c << endl;
+    return NULL;
 }

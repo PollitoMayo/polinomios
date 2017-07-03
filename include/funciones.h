@@ -25,6 +25,7 @@ void recibirPolinomio(Lista &);
 void agregarPolinomio(Polinomio, Lista &);
 
 void eliminarPolinomio(Lista &, string);
+void eliminarTodos(Lista &);
 
 Polinomio leerExpresion(string, Lista);
 

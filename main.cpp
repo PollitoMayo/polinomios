@@ -56,7 +56,7 @@ int main() {
                 cout << "No hay polinomios registrados." << endl;
             } else {
                 cout << "Eliminando " << contarPolinomios(listaPolinomios) << " polinomio";
-                if(contarPolinomios(listaPolinomios) !=) {
+                if(contarPolinomios(listaPolinomios) != 1) {
                     cout << "s . . .";
                 }
                 cout << endl;

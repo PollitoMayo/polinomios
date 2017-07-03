@@ -255,14 +255,12 @@ bool existePolinomio(string nombre, Lista L) {
 void eliminarTodos(Lista &L) {
     Lista p = L;
     if(L != NULL) {
-
         while(p != NULL) {
-            L->Link = p->Link;
+            L = p->Link;
             delete p;
             p = L;
         }
     }
-    return false;
 }
 
 Polinomio validarPolinomio(Polinomio P, Lista L) {

@@ -260,7 +260,9 @@ Polinomio Polinomio::operator /= (const Polinomio P) {
 
 Polinomio Polinomio::operator % (const Polinomio P) {
     if(grado < P.grado) {
-        return NULL;
+        Polinomio R = NULL;
+        R.error = true;
+        return R;
     } else {
         int gradoDividendo = grado;
         int gradoDivisor, gradoCociente, aux;

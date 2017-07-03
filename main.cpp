@@ -52,6 +52,21 @@ int main() {
             break;
         case 3:
             system("cls");
+            if(listaPolinomios == NULL){
+                cout << "No hay polinomios registrados." << endl;
+            } else {
+                cout << "Eliminando " << contarPolinomios(listaPolinomios) << " polinomio";
+                if(contarPolinomios(listaPolinomios) !=) {
+                    cout << "s . . .";
+                }
+                cout << endl;
+                eliminarTodos(listaPolinomios);
+            }
+            cout << endl;
+            system("pause");
+            break;
+        case 4:
+            system("cls");
             if(listaPolinomios == NULL) {
                 cout << "No hay polinomios registrados." << endl;
             } else {
@@ -73,7 +88,7 @@ int main() {
             cout << endl;
             system("pause");
             break;
-        case 4:
+        case 5:
             system("cls");
             cout << "Ingrese la expresion a ejecutar: ";
             cin >> cadena;
@@ -87,7 +102,7 @@ int main() {
             cout << endl;
             system("pause");
             break;
-        case 5:
+        case 6:
             system("cls");
             if(listaPolinomios == NULL) {
                 cout << "No hay polinomios registrados." << endl;
@@ -98,7 +113,7 @@ int main() {
             cout << endl;
             system("pause");
             break;
-        case 6:
+        case 7:
             system("cls");
             leerArchivo(listaPolinomios);
             cout << endl << endl;

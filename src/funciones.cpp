@@ -60,14 +60,15 @@ void menu(int &r) {
         cout << "\n\n\tMENU \n\n" << endl;
         cout << "\t1. Agregar un polinomio" << endl;
         cout << "\t2. Eliminar un polinomio" << endl;
-        cout << "\t3. Operar un polinomio" << endl;
-        cout << "\t4. Ejecutar una expresion" << endl;
-        cout << "\t5. Ver los polinomios registrados" << endl;
-        cout << "\t6. Leer polinomios y expresiones de un archivo (Recomendado)" << endl << endl;
+        cout << "\t3. Eliminar TODOS los polinomio" << endl;
+        cout << "\t4. Operar un polinomio" << endl;
+        cout << "\t5. Ejecutar una expresion" << endl;
+        cout << "\t6. Ver los polinomios registrados" << endl;
+        cout << "\t7. Leer polinomios y expresiones de un archivo (Recomendado)" << endl << endl;
         cout << "\t0. Salir\n" << endl;
         cout << "\tIngrese el numero de la operacion a ejecutar: ";
         cin >> r;
-    } while(r < 0 || r > 6);
+    } while(r < 0 || r > 7);
 }
 
 void submenu(int &r) {
@@ -246,6 +247,19 @@ bool existePolinomio(string nombre, Lista L) {
                 return true;
             }
             L = L->Link;
+        }
+    }
+    return false;
+}
+
+void eliminarTodos(Lista &L) {
+    Lista p = L;
+    if(L != NULL) {
+
+        while(p != NULL) {
+            L->Link = p->Link;
+            delete p;
+            p = L;
         }
     }
     return false;

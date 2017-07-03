@@ -75,20 +75,8 @@ Polinomio::~Polinomio() {
     // delete [] coeficientes;
 }
 
-int Polinomio::getG() {
-    return grado;
-}
-
-void Polinomio::setC(int i, int c) {
-    coeficientes[i] = c;
-}
-
 void Polinomio::setN(string r){
     nombre = r;
-}
-
-int Polinomio::getC(int i) {
-    return coeficientes[i];
 }
 
 string Polinomio::getN() {
@@ -230,7 +218,7 @@ Polinomio Polinomio::operator * (const int a) {
     return R;
 }
 
-Polinomio Polinomio::operator * (const int a) {
+Polinomio Polinomio::operator *= (const int a) {
     *this = *this * a;
     return *this;
 }
@@ -295,7 +283,7 @@ Polinomio Polinomio::operator % (const Polinomio P) {
 Polinomio Polinomio::der() {
     Polinomio R(grado-1);
     for(int i=1; i<grado+1; i++) {
-        R.setC(i-1, i*coeficientes[i]);
+        R.coeficientes[i-1] = i*coeficientes[i];
     }
     return R;
 

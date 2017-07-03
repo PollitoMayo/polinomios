@@ -17,14 +17,6 @@
 using namespace std;
 
 int main() {
-    Polinomio P1("2#2");
-    Polinomio P2("-3#2");
-    P1 += P2;
-
-    cout << P1 << endl;
-
-    system("pause");
-
     int opcion1, opcion2;
     string cadena;
     Lista listaPolinomios = NULL;

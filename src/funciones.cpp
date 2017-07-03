@@ -198,9 +198,10 @@ int switchSubmenu(int opcion, Lista L, string nombreP1){
                 cin >> nombreP2;
             }
             P2 = buscarPolinomio(L, nombreP2);
-            PolinomioResultado = P1 % P2;
             system("cls");
             cout << P1 << endl;
+            PolinomioResultado = P1 % P2;
+            PolinomioResultado.setN("");
             cout << P2 << endl;
             cout << endl << P1.getN() << "%" << P2.getN() << " = " << PolinomioResultado << endl;
             break;

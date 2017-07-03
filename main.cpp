@@ -78,8 +78,12 @@ int main() {
             cout << "Ingrese la expresion a ejecutar: ";
             cin >> cadena;
             system("cls");
-            cout << cadena << " = ";
-            cout << eval(cadena, listaPolinomios) << endl;
+            if(eval(cadena, listaPolinomios).error) {
+                cout << "No se pudo operar la expresion '" << cadena << "'. Puede que exista una division incorrecta." << endl;
+            } else {
+                cout << cadena << " = ";
+                cout << eval(cadena, listaPolinomios) << endl;
+            }
             cout << endl;
             system("pause");
             break;

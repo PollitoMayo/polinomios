@@ -229,7 +229,9 @@ Polinomio Polinomio::operator / (const Polinomio P) {
         Paux.coeficientes[i] = coeficientes[i];
     }
     if(grado < P.grado) {
-        return NULL;
+        Polinomio R = NULL;
+        R.error = true;
+        return R;
     } else {
         int gradoDividendo = Paux.grado;
         int gradoDivisor, gradoCociente, aux;

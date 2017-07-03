@@ -181,7 +181,11 @@ int switchSubmenu(int opcion, Lista L, string nombreP1){
             system("cls");
             cout << P1 << endl;
             cout << P2 << endl;
-            cout << endl << P1.getN() << "/" << P2.getN() << " = " << PolinomioResultado << endl;
+            if(PolinomioResultado.error) {
+                cout << "No se pudo realizar la operacion. El dividendo tiene menor grado que el divisor." << endl;
+            } else {
+                cout << endl << P1.getN() << "/" << P2.getN() << " = " << PolinomioResultado << endl;
+            }
             break;
         case 5:
             system("cls");
@@ -201,9 +205,13 @@ int switchSubmenu(int opcion, Lista L, string nombreP1){
             system("cls");
             cout << P1 << endl;
             PolinomioResultado = P1 % P2;
-            PolinomioResultado.setN("");
             cout << P2 << endl;
-            cout << endl << P1.getN() << "%" << P2.getN() << " = " << PolinomioResultado << endl;
+
+            if(PolinomioResultado.error) {
+                cout << "No se pudo realizar la operacion. El dividendo tiene menor grado que el divisor." << endl;
+            } else {
+                cout << endl << P1.getN() << "%" << P2.getN() << " = " << PolinomioResultado << endl;
+            }
             break;
         case 6:
             system("cls");
@@ -296,8 +304,8 @@ void leerArchivo(Lista &L) {
     while(!archivo.eof()) {
 
         string linea;
-        remover(linea, ' ');
         getline(archivo, linea);
+        remover(linea, ' ');
         if(linea == "Polinomios:") {
             esPolinomio = true;
             esExpresion = false;
@@ -313,7 +321,12 @@ void leerArchivo(Lista &L) {
                 agregarPolinomio(P, L);
                 agregados++;
             } else if (esExpresion) {
-                cout << eval(linea, L) << endl;
+                if(eval(linea, L).error) {
+                    cout << "No se pudo operar la expresion '" << linea << "'. Puede que exista una division incorrecta." << endl;
+                } else {
+                    cout << eval(linea, L) << endl;
+                }
+
             }
         }
     }
@@ -431,25 +444,19 @@ Polinomio eval(string cadena, Lista P) {
         }
 
         Polinomio parsearVariable() {
-            /*if (esSiguiente('+')) {
-                return parsearVariable(); // unary plus
-            }
-            if (esSiguiente('-')) {
-                return -parsearVariable(); // unary minus
-            }*/
 
             Polinomio R;
             int posInicial = pos;
-            if (esSiguiente('(')) { // parentheses
+            if (esSiguiente('(')) {
                 R = parsearTermino();
                 esSiguiente(')');
-            } else if (ch == 'd' && str[pos+1] == 'e' && str[pos+2] == 'r') { // functions
+            } else if (ch == 'd' && str[pos+1] == 'e' && str[pos+2] == 'r') {
                 while (ch != '(') {
                     avanza();
                 }
                 R = parsearTermino();
                 R = R.der();
-            } else if (ch != '/' && ch != '*' && ch != '+' && ch != '-' && ch != '(' && ch != ')' && ch != NULL) { // numbers
+            } else if (ch != '/' && ch != '*' && ch != '+' && ch != '-' && ch != '(' && ch != ')' && ch != NULL) {
                 while (ch != '/' && ch != '*' && ch != '+' && ch != '-' && ch != '(' && ch != ')' && ch != NULL) {
                     avanza();
                 }
@@ -459,18 +466,17 @@ Polinomio eval(string cadena, Lista P) {
             } else {
                 cout << "Error, caracter '" << ch << "' inesperado en la posicion " << pos;
             }
-            //if(eat('^')) x = Math.pow(x, parseFactor()); // exponentiation
 
             return R;
         }
 
         Polinomio parsearFactor() {
             Polinomio R = parsearVariable();
-            for (;;) {                  // for infinito
+            for (;;) {
                 if (esSiguiente('*')) {
-                    R = R * parsearVariable(); // multiplicacion
+                    R = R * parsearVariable();
                 } else if (esSiguiente('/')) {
-                    R = R / parsearVariable(); // division
+                    R = R / parsearVariable();
                 } else {
                     return R;
                 }
@@ -479,11 +485,11 @@ Polinomio eval(string cadena, Lista P) {
 
         Polinomio parsearTermino() {
             Polinomio R = parsearFactor();
-            for(;;) {                    // for infinito
+            for(;;) {
                 if (esSiguiente('+')) {
-                    R = R + parsearFactor(); // addition
+                    R = R + parsearFactor();
                 } else if (esSiguiente('-')) {
-                    R = R - parsearFactor(); // subtraction
+                    R = R - parsearFactor();
                 } else {
                     return R;
                 }

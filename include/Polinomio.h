@@ -7,6 +7,7 @@ using namespace std;
 
 class Polinomio {
     public:
+        bool error = false;
         Polinomio();
         Polinomio(int);
         Polinomio(string);

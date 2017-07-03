@@ -9,6 +9,7 @@ Polinomio::Polinomio() {
     grado = 0;
     coeficientes = new int[grado+1];
     coeficientes[0] = 0;
+    error = false;
 }
 
 Polinomio::Polinomio(int g) {
@@ -17,6 +18,7 @@ Polinomio::Polinomio(int g) {
     for(int i=0; i<grado+1; i++) {
         coeficientes[i] = 0;
     }
+    error = false;
 }
 
 Polinomio::Polinomio(string cadena) {
@@ -26,6 +28,7 @@ Polinomio::Polinomio(string cadena) {
         coeficientes[i] = 0;
     }
     llenar(cadena);
+    error = false;
 }
 
 void Polinomio::llenar(string cadena) {

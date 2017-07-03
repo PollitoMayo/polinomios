@@ -410,7 +410,7 @@ void eliminarPolinomio(Lista &L, string nombre){
 Polinomio eval(string cadena, Lista P) {
     class local {
     public:
-        int pos = -1;
+        int pos;
         char ch;
         string str;
         Lista L;
@@ -418,6 +418,7 @@ Polinomio eval(string cadena, Lista P) {
         Polinomio parsearFactor(string);
 
         local(string c, Lista A) {
+            pos = -1;
             str = c;
             L = A;
         }

@@ -122,37 +122,45 @@ bool Polinomio::operator == (const Polinomio &P) const {
     return true;
 }
 
-Polinomio Polinomio::operator + (const Polinomio P) {
-    int mayor;
-    if(grado >= P.grado) {
-        mayor = grado;
+bool Polinomio::operator == (const int &a) const {
+    if(*this == NULL && a == NULL) {
+        return true;
+    } else if (grado == 0 && coeficientes[0] == a) {
+        return true;
     } else {
-        mayor = P.grado;
+        for(int i=0; i<=grado; i++) {
+            if(i == 0) {
+                return coeficientes[i] == a;
+            } else {
+                return coeficientes[i] == 0;
+            }
+        }
     }
+    return false;
+}
+
+bool Polinomio::operator != (const Polinomio &P) const {
+    return !(*this == P);
+}
+
+bool Polinomio::operator != (const int &a) const {
+    return !(*this == a);
+}
+
+Polinomio Polinomio::operator + (const Polinomio P) {
+    int mayor = (grado >= P.grado) ? grado : P.grado;
+
     Polinomio R(mayor);
     for(int i=0; i<=mayor; i++) {
-        if(grado > P.grado){
-            if(i > P.grado){
-                R.coeficientes[i] = R.coeficientes[i] + coeficientes[i];
-            }
-            else{
-                R.coeficientes[i] = R.coeficientes[i] + P.coeficientes[i] + coeficientes[i];
-            }
-        }
-        else{
-            if(P.grado > grado){
-                if(i > grado){
-                    R.coeficientes[i] = R.coeficientes[i] + P.coeficientes[i];
-                }
-                else{
-                    R.coeficientes[i] = R.coeficientes[i] + P.coeficientes[i] + coeficientes[i];
-                }
-            }
-            else{
-                R.coeficientes[i] = R.coeficientes[i] + P.coeficientes[i] + coeficientes[i];
-            }
+        if(i <= grado && i <= P.grado) {
+            R.coeficientes[i] += coeficientes[i] + P.coeficientes[i];
+        } else if (i <= grado) {
+            R.coeficientes[i] += coeficientes[i];
+        } else if (i <= P.grado) {
+            R.coeficientes[i] += P.coeficientes[i];
         }
     }
+
     Polinomio vacio;
     if(R == vacio) {
         return vacio;
@@ -160,46 +168,35 @@ Polinomio Polinomio::operator + (const Polinomio P) {
     return R;
 }
 
+Polinomio Polinomio::operator += (const Polinomio P) {
+    *this = *this + P;
+    return *this;
+}
+
 Polinomio Polinomio::operator - (const Polinomio P) {
-    int mayor;
-    if(grado >= P.grado) {
-        mayor = grado;
-    } else {
-        mayor = P.grado;
-    }
+    int mayor = (grado >= P.grado) ? grado : P.grado;
+
     Polinomio R(mayor);
-    if(grado >= P.grado) {
-        for(int i=0; i<=grado; i++){
-            R.coeficientes[i] = coeficientes[i];
-        }
-    } else {
-        R = P;
-    }
     for(int i=0; i<=mayor; i++) {
-        if(grado > P.grado){
-            if(i <= P.grado){
-                R.coeficientes[i] = R.coeficientes[i] - P.coeficientes[i];
-            }
-        }
-        else{
-            if(P.grado > grado){
-                if(i <= grado){
-                    R.coeficientes[i] = coeficientes[i] - R.coeficientes[i];
-                }
-                else{
-                    R.coeficientes[i] = -R.coeficientes[i];
-                }
-            }
-            else{
-                R.coeficientes[i] = R.coeficientes[i] - P.coeficientes[i];
-            }
+        if(i <= grado && i <= P.grado) {
+            R.coeficientes[i] += coeficientes[i] - P.coeficientes[i];
+        } else if (i <= grado) {
+            R.coeficientes[i] += coeficientes[i];
+        } else if (i <= P.grado) {
+            R.coeficientes[i] += P.coeficientes[i];
         }
     }
+
     Polinomio vacio;
     if(R == vacio) {
         return vacio;
     }
     return R;
+}
+
+Polinomio Polinomio::operator -= (const Polinomio P) {
+    *this = *this + P;
+    return *this;
 }
 
 Polinomio Polinomio::operator * (const Polinomio P) {
@@ -216,6 +213,11 @@ Polinomio Polinomio::operator * (const Polinomio P) {
     return R;
 }
 
+Polinomio Polinomio::operator *= (const Polinomio P) {
+    *this = *this + P;
+    return *this;
+}
+
 Polinomio Polinomio::operator * (const int a) {
     Polinomio R(grado);
     for(int i=0; i<grado+1; i++) {
@@ -226,6 +228,11 @@ Polinomio Polinomio::operator * (const int a) {
         return vacio;
     }
     return R;
+}
+
+Polinomio Polinomio::operator * (const int a) {
+    *this = *this * a;
+    return *this;
 }
 
 Polinomio Polinomio::operator / (const Polinomio P) {
@@ -256,6 +263,11 @@ Polinomio Polinomio::operator / (const Polinomio P) {
     }
 }
 
+Polinomio Polinomio::operator /= (const Polinomio P) {
+    *this = *this + P;
+    return *this;
+}
+
 Polinomio Polinomio::operator % (const Polinomio P) {
     if(grado < P.grado) {
         return NULL;
@@ -280,19 +292,13 @@ Polinomio Polinomio::operator % (const Polinomio P) {
     }
 }
 
-Polinomio Polinomio::derivar() {
+Polinomio Polinomio::der() {
     Polinomio R(grado-1);
     for(int i=1; i<grado+1; i++) {
         R.setC(i-1, i*coeficientes[i]);
     }
     return R;
 
-}
-
-void Polinomio::listar() {
-    for(int i=0; i<grado+1; i++) {
-        cout << "P[" << i << "]: " << coeficientes[i] << endl;
-    }
 }
 
 ostream &operator << (ostream &output, const Polinomio &P){

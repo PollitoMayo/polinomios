@@ -463,7 +463,7 @@ Polinomio eval(string cadena, Lista P) {
             if (esSiguiente('(')) {
                 R = parsearTermino();
                 esSiguiente(')');
-            } else if (ch == 'd' && str[pos+1] == 'e' && str[pos+2] == 'r') {
+            } else if (ch == 'd' && str[pos+1] == 'e' && str[pos+2] == 'r') { // Revisa si existe derivada
                 while (ch != '(') {
                     avanza();
                 }

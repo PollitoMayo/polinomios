@@ -139,7 +139,7 @@ bool Polinomio::operator != (const int &a) const {
 }
 
 Polinomio Polinomio::operator + (const Polinomio P) {
-    int mayor = (grado >= P.grado) ? grado : P.grado;
+    int mayor = (grado >= P.grado) ? grado : P.grado; //Uso de operador ternario para asignra el valor a la variable.
 
     Polinomio R(mayor);
     for(int i=0; i<=mayor; i++) {
@@ -165,7 +165,7 @@ Polinomio Polinomio::operator += (const Polinomio P) {
 }
 
 Polinomio Polinomio::operator - (const Polinomio P) {
-    int mayor = (grado >= P.grado) ? grado : P.grado;
+    int mayor = (grado >= P.grado) ? grado : P.grado;   // Uso de operador ternario para asignar el valor a la variable.
 
     Polinomio R(mayor);
     for(int i=0; i<=mayor; i++) {
@@ -191,7 +191,7 @@ Polinomio Polinomio::operator -= (const Polinomio P) {
 }
 
 Polinomio Polinomio::operator * (const Polinomio P) {
-    Polinomio R(grado + P.grado);
+    Polinomio R(grado + P.grado);   // Declaración del polinomio resultante.
     for(int i=0; i<grado+1; i++) {
         for(int j=0; j<P.grado+1; j++) {
             R.coeficientes[i+j] += coeficientes[i] * P.coeficientes[j];
@@ -227,30 +227,29 @@ Polinomio Polinomio::operator *= (const int a) {
 }
 
 Polinomio Polinomio::operator / (const Polinomio P) {
-    Polinomio Paux(grado);
+    Polinomio Paux(grado);  // Declaración de un polinomio auxiliar que será idéntico al primer polinomio.
     for(int i=0; i <= Paux.grado; i++){
         Paux.coeficientes[i] = coeficientes[i];
     }
     if(grado < P.grado) {
-        Polinomio R = NULL;
+        Polinomio R = NULL; // Si el grado del dividendo es menor, no es posible dividir.
         R.error = true;
         return R;
     } else {
         int gradoDividendo = Paux.grado;
         int gradoDivisor, gradoCociente, aux;
-        Polinomio R(Paux.grado - P.grado);
-        while(gradoDividendo >= P.grado){
+        Polinomio R(Paux.grado - P.grado);  // Declaracion polinomio resultante.
+        while(gradoDividendo >= P.grado){   // En cada ciclo, va restando un grado al dividendo para operarlo mientras sea mayor o igual al grado del divisor.
             gradoDivisor = P.grado;
-            gradoCociente = gradoDividendo - gradoDivisor;
-            aux = gradoDividendo;
+            gradoCociente = gradoDividendo - gradoDivisor;  // Grado polinomio resultante.
+            aux = gradoDividendo;   // Se guarda el grado del dividendo.
             R.coeficientes[gradoCociente] = Paux.coeficientes[gradoDividendo]/P.coeficientes[gradoDivisor];
-            while(gradoDivisor >= 0) {
+            while(gradoDivisor >= 0) {  // En cada ciclo, resta en el auxiliar el cociente entre el grado del divisor y el grado del dividendo.
                 Paux.coeficientes[gradoDividendo] -= R.coeficientes[gradoCociente] * P.coeficientes[gradoDivisor];
                 gradoDividendo--;
                 gradoDivisor--;
             }
-            gradoDividendo = aux;
-            gradoDividendo--;
+            gradoDividendo = aux - 1;   // Se recupera el grado del dividendo y se le resta uno para continuar con la división.
         }
         return R;
     }
@@ -262,33 +261,32 @@ Polinomio Polinomio::operator /= (const Polinomio P) {
 }
 
 Polinomio Polinomio::operator % (const Polinomio P) {
-    if(grado < P.grado) {
+    if(grado < P.grado) {   // Si el dividendo es de grado menor que el divisor, la división no es posible.
         Polinomio R = NULL;
         R.error = true;
         return R;
     } else {
         int gradoDividendo = grado;
         int gradoDivisor, gradoCociente, aux;
-        Polinomio R(grado - P.grado);
-        while(gradoDividendo >= P.grado){
+        Polinomio R(grado - P.grado);   // Declaración del polinomio resultante.
+        while(gradoDividendo >= P.grado){   // En cada ciclo primero se compara si el grado del dividendo es mayor o igual al grado del divisor.
             gradoDivisor = P.grado;
             gradoCociente = gradoDividendo - gradoDivisor;
-            aux = gradoDividendo;
+            aux = gradoDividendo;   // Se guarda en un auxiliar para no perder su valor dentro del segundo while.
             R.coeficientes[gradoCociente] = coeficientes[gradoDividendo]/P.coeficientes[gradoDivisor];
-            while(gradoDivisor >= 0) {
+            while(gradoDivisor >= 0) {  // En cada ciclo se resta al primer polinomio la multiplicacion entre el cociente y el divisor.
                 coeficientes[gradoDividendo] -= R.coeficientes[gradoCociente] * P.coeficientes[gradoDivisor];
                 gradoDividendo--;
                 gradoDivisor--;
             }
-            gradoDividendo = aux;
-            gradoDividendo--;
+            gradoDividendo = aux - 1;   // Se recupera el valor del dividendo y se le resta uno para seguir con la división.
         }
         return *this;
     }
 }
 
 Polinomio Polinomio::der() {
-    Polinomio R(grado-1);
+    Polinomio R(grado-1);   // Se declara el polinomio resultante.
     for(int i=1; i<grado+1; i++) {
         R.coeficientes[i-1] = i*coeficientes[i];
     }
@@ -296,18 +294,22 @@ Polinomio Polinomio::der() {
 
 }
 
-ostream &operator << (ostream &output, const Polinomio &P){
+ostream &operator << (ostream &output, const Polinomio &P) { // Se sobrecarga el operador << para poder hacer cout directamente
     bool primero = true;
-    if(P.nombre != "") {
+    if(P.nombre != "") {    // En caso de tener nombre
         output << P.nombre << " = ";
     }
     for(int i=P.grado; i>=0; i--) {
-        if(P.coeficientes[i] != 0 && P.grado != 0) {
+        if(P.coeficientes[i] != 0 && P.grado != 0) {    //
             if(P.coeficientes[i] > 0 && !primero) {
-                output << "+";
+                output << "+";  // En caso de que el numero sea positivo y no sea el primero
             }
             if(P.coeficientes[i] == -1) {
-                output << "-";
+                if(i == 0) {
+                    output << P.coeficientes[i];
+                } else {
+                    output << "-";
+                }
             } else if (P.coeficientes[i] != 1 || (P.coeficientes[i] == 1 && i == 0)) {
                 output << P.coeficientes[i];
             }

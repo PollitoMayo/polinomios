@@ -66,7 +66,7 @@ P.O.O. y memoria dinámica, entre otros aspectos para la solución.
 ------------------
 
 #### Autores:
-- **Jorge Verdugo** ([@jorgeverdugoch](https://github.com/jorgeverdugoch/))
+- **Jorge Verdugo** ([@mapacheverdugo](https://github.com/mapacheverdugo/))
 - **Javiera Vergara** ([@PollitoMayo](https://github.com/PollitoMayo/))
 
 *Estructura de Datos*
